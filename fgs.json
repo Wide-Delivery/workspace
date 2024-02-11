@@ -1,0 +1,14 @@
+{
+  "client-api" : {
+    "url" : "git@github.com-matsakdev:Wide-Delivery/api.git"
+  },
+  "admin-ui": {
+    "url": "git@github.com-matsakdev:Wide-Delivery/admin-ui.git"
+  },
+  "admin-api" : {
+    "url" : "git@github.com:Wide-Delivery/admin-api.git"
+  },
+  "android": {
+    "url": "git@github.com-matsakdev:Wide-Delivery/mobile.git"
+  }
+}

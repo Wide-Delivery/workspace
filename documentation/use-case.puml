@@ -1,0 +1,60 @@
+@startuml
+!theme vibrant
+left to right direction
+
+actor Client as CLI
+actor Admin as ADM
+
+usecase Register as Reg
+usecase Login as Log
+usecase "Make reservation" as MK_RES
+usecase "Make order" as MK_ORD
+usecase "Check delivery status" as CHK_DEL_STTS
+usecase "Change settings" as CHNG_STNGS
+usecase "Approve delivery" as APPR_DEL
+
+note "Should reflect on auth" as AUTH_REFLECT
+
+CLI --> (Reg)
+Reg <.. (Google SignIn)
+Reg <.. (Email + Password)
+
+CLI --> (Log)
+Log <.. (Google SignIn)
+Log <.. (Email + Password)
+Log <.. (Biometric (FaceID, Fingerprint)
+
+CLI --> (MK_RES)
+MK_RES <.. (Specify departure point [OUT OF])
+MK_RES <.. (Specify arrival point [INTO])
+MK_RES <.. (Specify count/type of packages, total weight)
+MK_RES <.. (Specify date, time)
+
+CLI --> (MK_ORD)
+MK_ORD <.. (Choose delivery variant)
+MK_ORD --> (Make call/text to support)
+MK_ORD --> (Set remainder <as notification\n or via email>)
+
+CLI --> (CHNG_STNGS)
+CHNG_STNGS --> (Change email)
+CHNG_STNGS --> (Change password)
+CHNG_STNGS --> (Add/Remove biometric)
+CHNG_STNGS --> (Add payment method)
+
+(Change email) .. AUTH_REFLECT
+(Change password) .. AUTH_REFLECT
+note right of (Change password): Should be confirmed with email letter
+
+CLI --> (CHK_DEL_STTS)
+CHK_DEL_STTS --> (See time to driver arrive on OUT point)
+CHK_DEL_STTS --> (See time to driver arrive on IN point)
+CHK_DEL_STTS --> (See where the driver is now)
+CHK_DEL_STTS --> (Make call/text to support)
+
+CLI --> (APPR_DEL)
+APPR_DEL --> (Rate driver)
+APPR_DEL --> (Make call/text to support)
+APPR_DEL <.. (Confirm the integrity of delivery)
+
+@enduml
+
