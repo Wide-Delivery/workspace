@@ -17,6 +17,12 @@ services:
       - "traefik.enable=true"
       - "traefik.http.middlewares.strip-client-api-prefix.stripprefix.prefixes=/api"
 
+      - "traefik.http.middlewares.cors.headers.accesscontrolallowmethods=*"
+      - "traefik.http.middlewares.cors.headers.accesscontrolallowheaders=*"
+      - "traefik.http.middlewares.cors.headers.accesscontrolalloworiginlist=*"
+      - "traefik.http.middlewares.cors.headers.accesscontrolmaxage=100"
+      - "traefik.http.middlewares.cors.headers.addvaryheader=true"
+
 #      look at client-api compose file to know why it's commented
 #      - "traefik.http.middlewares.strip-docs.stripprefix.prefixes=/,/docs"
 #      - "traefik.http.middlewares.docs-redirectregex.redirectregex.regex=^http://swagger.localhost/(.*).js"
