@@ -1,4 +1,7 @@
 {
+  "user-svc" : {
+    "url" : "git@github.com-matsakdev:Wide-Delivery/user-svc.git"
+  },
   "client-api" : {
     "url" : "git@github.com-matsakdev:Wide-Delivery/api.git"
   },

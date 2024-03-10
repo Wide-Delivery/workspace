@@ -31,3 +31,40 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik.yaml:/etc/traefik/traefik.yaml
       - ./logs:/logs # Add this line to mount a volume for logs
+
+  wd-mongo:
+    ports:
+      - '27017:27017'
+    image: mongo
+    container_name: wd-mongo
+    restart: always
+    logging:
+      options:
+        max-size: 1g
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - ./mongo:/data/db
+  wd-mongo-express:
+    image: mongo-express
+    restart: always
+    container_name: wd-mongo-express
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_SERVER: wd-mongo
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@wd-mongo:27017/
+
+  wd-redis:
+    image: redis/redis-stack
+    container_name: wd-redis
+    ports:
+      - "6379:6379"
+      - "8001:8001"
+    volumes:
+      - ./redis:/data
+#      - ./config/local-redis-stack.conf:/redis-stack.conf
+
