@@ -1,17 +1,20 @@
 {
   "user-svc" : {
-    "url" : "git@github.com-matsakdev:Wide-Delivery/user-svc.git"
+    "url" : "https://github.com/Wide-Delivery/user-svc.git"
+  },
+  "order-svc" : {
+    "url" : "https://github.com/Wide-Delivery/order-svc.git"
   },
   "client-api" : {
-    "url" : "git@github.com-matsakdev:Wide-Delivery/api.git"
+    "url" : "https://github.com/Wide-Delivery/api.git"
   },
   "admin-ui": {
-    "url": "git@github.com-matsakdev:Wide-Delivery/admin-ui.git"
+    "url": "https://github.com/Wide-Delivery/admin-ui.git"
   },
   "admin-api" : {
-    "url" : "git@github.com:Wide-Delivery/admin-api.git"
+    "url" : "https://github.com/Wide-Delivery/admin-api.git"
   },
   "android": {
-    "url": "git@github.com-matsakdev:Wide-Delivery/mobile.git"
+    "url": "https://github.com/Wide-Delivery/mobile.git"
   }
 }
