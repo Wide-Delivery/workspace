@@ -6,6 +6,7 @@ export wkdr=$PWD
 
 #cd $wkdr/admin-api && make start
 cd $wkdr/user-svc && make start
+cd $wkdr/order-svc && make start
 cd $wkdr/client-api && make start
 #cd $wkdr/admin-ui && make start
 
