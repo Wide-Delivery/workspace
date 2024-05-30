@@ -1,0 +1,10 @@
+filebeat.inputs:
+  - type: filestream
+    paths:
+      - /var/log/*/*.log
+    json.keys_under_root: true
+    json.overwrite_keys: true
+    json.add_error_key: true
+    json.expand_keys: true
+output.logstash:
+  hosts: ["wd-logstash:5044"]

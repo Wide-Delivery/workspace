@@ -38,31 +38,53 @@ services:
       - ./traefik.yaml:/etc/traefik/traefik.yaml
       - ./logs:/logs # Add this line to mount a volume for logs
 
-  wd-mongo:
+#  wd-mongo:
+#    ports:
+#      - '27017:27017'
+#    image: mongo
+#    container_name: wd-mongo
+#    restart: always
+#    logging:
+#      options:
+#        max-size: 1g
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: root
+#      MONGO_INITDB_ROOT_PASSWORD: example
+#    volumes:
+#      - ./mongo:/data/db
+#  wd-mongo-express:
+#    image: mongo-express
+#    restart: always
+#    container_name: wd-mongo-express
+#    ports:
+#      - "8081:8081"
+#    environment:
+#      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+#      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+#      ME_CONFIG_MONGODB_SERVER: wd-mongo
+#      ME_CONFIG_MONGODB_URL: mongodb://root:example@wd-mongo:27017/
+
+  wd-logstash:
+    image: docker.elastic.co/logstash/logstash:8.13.4
+    container_name: wd-logstash
     ports:
-      - '27017:27017'
-    image: mongo
-    container_name: wd-mongo
-    restart: always
-    logging:
-      options:
-        max-size: 1g
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
+      - "5044:5044"
     volumes:
-      - ./mongo:/data/db
-  wd-mongo-express:
-    image: mongo-express
-    restart: always
-    container_name: wd-mongo-express
-    ports:
-      - "8081:8081"
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: example
-      ME_CONFIG_MONGODB_SERVER: wd-mongo
-      ME_CONFIG_MONGODB_URL: mongodb://root:example@wd-mongo:27017/
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+
+  wd-filebeat:
+    image: docker.elastic.co/beats/filebeat:8.13.4
+    container_name: wd-filebeat
+#    user: root
+    entrypoint: sh -c "chmod go-w /usr/share/filebeat/filebeat.yml && filebeat -e -c /usr/share/filebeat/filebeat.yml"
+    volumes:
+      - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - registry:/usr/share/filebeat/data:rw
+#      - wd-user-svc-logs:/var/log/wd-user-svc
+#      - wd-order-svc-logs:/var/log/wd-order-svc
+      - wd-client-api-logs:/var/log/wd-client-api
 
   wd-redis:
     image: redis/redis-stack
@@ -74,3 +96,11 @@ services:
       - ./redis:/data
 #      - ./config/local-redis-stack.conf:/redis-stack.conf
 
+volumes:
+#  wd-user-svc-logs:
+#    external: true
+#  wd-order-svc-logs:
+#    external: true
+  wd-client-api-logs:
+    external: true
+  registry:

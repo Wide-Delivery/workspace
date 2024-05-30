@@ -5,6 +5,9 @@
   "order-svc" : {
     "url" : "https://github.com/Wide-Delivery/order-svc.git"
   },
+  "driver-svc" : {
+    "url" : "https://github.com/Wide-Delivery/driver-svc.git"
+  },
   "client-api" : {
     "url" : "https://github.com/Wide-Delivery/api.git"
   },
